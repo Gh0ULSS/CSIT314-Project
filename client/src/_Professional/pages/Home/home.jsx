@@ -30,23 +30,34 @@ const Home = () => {
     getlocationdetails();
 },[]);
 
-  let clientvote = JSON.parse(localStorage.getItem('accepttradiedata'));
   //console.log(clientvote.tradiename);
-  
-  let cvote = clientvote.tradiename;
-  let profname = localStorage.getItem('Tradie_name');
-  let cname = clientvote.client_name;
-
-  console.log(cvote);
-  console.log(cname);
 
   function Showclientvote()
   {
-      if(cvote == profname)
+      let clientvote = JSON.parse(localStorage.getItem('accepttradiedata'));
+
+      let locstoragekeydoesnotexists = clientvote == null;
+
+      if(locstoragekeydoesnotexists)
       {
-         return  <h4 style={{"color": "red", "text-align": "left"}} >A client selected you: {cname}</h4>
+        return null;
+      }
+      else 
+      {
+        let cvote = clientvote.tradiename;
+        let profname = localStorage.getItem('Tradie_name');
+        let cname = clientvote.client_name;
+      
+        console.log(cvote);
+        console.log(cname);
+        if(cvote == profname)
+        {
+          return  <h4 style={{"color": "red", "text-align": "left"}} >A client selected you: {cname}</h4>
+        }
       }
   };
+
+  
   
 
   return (
@@ -157,7 +168,7 @@ const Home = () => {
       <br/>
       <br/>
       <br/>
-      <Showclientvote/>
+      <Showclientvote/> 
 
 
       {/* Footer  */}

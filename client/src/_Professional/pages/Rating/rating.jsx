@@ -62,6 +62,7 @@ const Rating = () => {
 
       setrating(0);
       setfeedback('');
+      setjobnotes('');
     }
   }
 

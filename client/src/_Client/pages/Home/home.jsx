@@ -31,23 +31,37 @@ const Home = () => {
 
   //console.log(localStorage.getItem('userId'));
   console.log(locationDetails);
-
-  //
-  let acceptedservreq = JSON.parse(localStorage.getItem('acceptedservreq'));
-  //console.log(clientvote.tradiename);
+ //console.log(clientvote.tradiename);
   
-  let sreqclient = acceptedservreq.client;
-  let clientname = localStorage.getItem('Client_name');
-
-  console.log(clientname);
-
   function Showpendingpayment()
   {
+
+    let acceptedservreq = JSON.parse(localStorage.getItem('acceptedservreq'));
+
+    let locstoragekeydoesnotexists = acceptedservreq == null;
+
+    if(locstoragekeydoesnotexists)
+    {
+       return null;
+    }
+    else
+    {
+      let sreqclient = acceptedservreq.client;
+      let clientname = localStorage.getItem('Client_name');
+      console.log(clientname);
+
       if(sreqclient == clientname)
       {
          return <h4 style={{"text-align": "left"}}><Link style={{"color": "red", "textDecoration": "none"}} to={"/client/payment"}>Service Payment Pending</Link></h4>
       }
+      else
+      {
+         return null;
+      }
+    }  
+
   };
+  
 
   return (
     <div className="home-client">
@@ -182,7 +196,7 @@ const Home = () => {
     <br/>
     <br/>
     <br/>
-    <Showpendingpayment/>
+   <Showpendingpayment/> 
 
 
   {/* React Footer Call*/}

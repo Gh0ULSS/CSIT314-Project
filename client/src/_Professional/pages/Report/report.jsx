@@ -31,6 +31,11 @@ const Report = () => {
 
   console.log(rdetails);
 
+  function Clearlocalstorage() {
+    localStorage.setItem('acceptedservreq', '');
+    localStorage.setItem('accepttradiedata', '');
+  }
+
   return (
     <div className="professional-report-page">
       <Header />
@@ -122,7 +127,7 @@ const Report = () => {
 
       <div>
         <ReactPDF
-            trigger={() => <button className="print-btn">Print</button>}
+            trigger={() => <button className="print-btn" onClick={Clearlocalstorage}>Print</button>}
             content={() => cref.current}
         />
       </div>
