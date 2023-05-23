@@ -172,15 +172,6 @@ const TaskAllocation = () => {
             </table>
         </div>
       </div>
-      <div className="task-next-page-btn-container">
-        <form action="/client/task-selection">
-          <input
-            className="task-next-page-btn"
-            type="submit"
-            value="Next Page"
-          />
-        </form>
-      </div>
 
       <Footer />
     </div>

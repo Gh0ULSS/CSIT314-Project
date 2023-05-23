@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 import "./report.css";
 import Axios from "axios";
 
+
+
 const Report = () => {
   const [rdetails,setrdetails] = useState([]);
   const cref = React.useRef(); 
@@ -30,11 +32,6 @@ const Report = () => {
 },[]);
 
   console.log(rdetails);
-
-  function Clearlocalstorage() {
-    localStorage.setItem('acceptedservreq', '');
-    localStorage.setItem('accepttradiedata', '');
-  }
 
   return (
     <div className="professional-report-page">
@@ -126,10 +123,10 @@ const Report = () => {
 
 
       <div>
-        <ReactPDF
-            trigger={() => <button className="print-btn" onClick={Clearlocalstorage}>Print</button>}
-            content={() => cref.current}
-        />
+          <ReactPDF
+              trigger={() => (<button className="print-btn">Print</button>)}
+              content={() => cref.current}
+          />
       </div>
       <Footer />
     </div>

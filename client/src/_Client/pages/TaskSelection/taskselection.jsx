@@ -110,15 +110,6 @@ const TaskSelection = () => {
           </h2>
         </div>
 
-        <div className="selection-NextPage-btn-container">
-          <form action="/client/payment">
-            <input
-              className="selection-NextPage-btn"
-              type="submit"
-              value="Next Page"
-            />
-          </form>
-        </div>
       </div>
       <Footer />
     </div>

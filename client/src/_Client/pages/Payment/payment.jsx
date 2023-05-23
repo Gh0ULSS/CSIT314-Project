@@ -126,15 +126,6 @@ const Payment = () => {
         </table>
       </div>
 
-      <div className="payment-NextPage-btn-container">
-        <form action="/client/rating">
-          <input
-            className="payment-NextPage-btn"
-            type="submit"
-            value="Next Page"
-          />
-        </form>
-      </div>
       <Footer />
     </div>
   );

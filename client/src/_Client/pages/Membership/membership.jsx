@@ -164,7 +164,7 @@ const Membership = () => {
                   <tr>
                       <div className="Button">
                         <form onSubmit={handleSubmit}> {/* The end one with the type=submit is where you handle submit*/}
-                          <input className="submitButton" type="submit" value="Next Page"/>
+                          <input className="submitButton" type="submit" value="Sign Up"/>
                         </form>
                       </div>
                   </tr>

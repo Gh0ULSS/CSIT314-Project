@@ -138,7 +138,7 @@ const Rating = () => {
           <input
             className="rating-NextPage-btn"
             type="submit"
-            value="Next Page"
+            value="Submit"
           />
         </form>
       </div>
