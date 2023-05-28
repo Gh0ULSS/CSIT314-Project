@@ -5,23 +5,27 @@ import Img1 from "../../../Images/user.png";
 import { useNavigate } from "react-router-dom";
 import "./Header.css";
 
+
 const Header = () => {
   const navigate = useNavigate();
-  const handleUserLogout = (e) => {
-    localStorage.removeItem('cLong'); // clear associated value/variables associated to a login session
-    localStorage.removeItem('cLat');
-    localStorage.removeItem('LuserId');
-    localStorage.removeItem('Client_name');
-    try {
-      fetch("http://localhost:3000/logout", {
-        method: "GET",
-        credentials: "same-origin",
-      });
-      navigate("/");
-    } catch (error) {
-      console.error("Error on Logout", error);
-    }
-  };
+
+    const handleUserLogout = () => {
+      // clear associated value/variables associated to a login session
+      localStorage.removeItem('cLong'); 
+      localStorage.removeItem('cLat');
+      localStorage.removeItem('LuserId');
+      localStorage.removeItem('Client_name');
+      try {
+        fetch("http://localhost:3000/logout", {
+          method: "GET",
+          credentials: "same-origin",
+        });
+        navigate("/");
+      } catch (error) {
+        console.error("Error on Logout", error);
+      }
+    };
+    // handleUserLogout() --> Don't bug it out FFS
 
   return (
     <div className="header">

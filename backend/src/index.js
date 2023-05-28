@@ -1,4 +1,13 @@
-import Express, { Router } from "express";
+/*
+CSIT314 Project
+Application Type: Web Application
+Web Stack Used: MySQL, Express, React, Nodejs (MERN)
+Project Contributors: Min Htut Myat, Ali Saleh, Charlie Johnson, Nathan Hunter, Amanda Moss
+*/
+
+// NOTE: using module instead of require()
+// The following are the required express dependencies for the project
+import Express from "express";
 //import mysql2 from "mysql2";
 import mysql from "mysql";
 import cors from "cors";
@@ -14,15 +23,15 @@ console.log("ENV File: " + env_file.toString());
 // Load environment vars from .env into process environment
 dotenv.config({path: env_file});
 
-const app = Express()
-app.use(cors())
-app.use(Express.json())
+const CSIT314_Proj = Express()
+CSIT314_Proj.use(cors())
+CSIT314_Proj.use(Express.json())
 
-// Use body-parser middleware
-app.use(bodyparser.urlencoded({ extended: false }));
-app.use(bodyparser.json());
+// body-parser middleware
+CSIT314_Proj.use(bodyparser.urlencoded({ extended: false }));
+CSIT314_Proj.use(bodyparser.json());
 
-app.use(
+CSIT314_Proj.use(
     session({
       key: process.env.SESSION_KEY,
       secret: process.env.SESSION_SECRET,
@@ -47,40 +56,46 @@ const db = mysql.createConnection({
 
 // API requests
 // "/" is like root directory in linux
-app.get("/", (req, res) => { // request and response
+CSIT314_Proj.get("/", (req, res) => { // request and response
      res.json("Is this connecting to SQL server")
 })
 
-// Handle logout
-app.get("http://localhost:3000/logout", (req, res) => {
+// ======== BOTH Client and Professional =========
+// LOGOUT functionality
+CSIT314_Proj.get("http://localhost:3000/logout", (req, res) => {
     // Session destroy on logout
-    req.session.destroy((err) => {
-      if (err) {
-        console.error("Fatal error occurred when destroying session", err);
-        return res.status(500).json({ success: false, message: "Logout failed" });
+    req.session.destrsoy((err) => {
+      if (!err) {
+        return res.status(200).json({message: "Successful logout"});
       }
       else
       {
-        return res.status(200).json({ success: true, message: "Successful logout" });
+        console.error("Fatal error occurred when destroying session", err);
+        return res.status(500).json({message: "Logout failed"});
       }
     });
 });
 
-// ===== Client ========
-
-// points to users table (LOGIN functionality)
-app.post("/users", (req, res) => {
+// ======== BOTH Client and Professional =========
+// LOGIN functionality 
+// NOTE: for string/varchar use ''
+CSIT314_Proj.post("/users", (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
-    db.query("SELECT * FROM users WHERE Email = ? AND Password = ?", [email, password], 
+    db.query(`SELECT * FROM users WHERE Email = '${email}' AND Password = '${password}'`,
         (err, result) => {
-            if(err){
-                console.log(err);
-            }else{
-                if(result.length > 0){
+            if(err)
+            {
+                console.log(err); 
+            }
+            else
+            {
+                if(result.length != 0)
+                {
                     res.status(200).send(result) // handle with OK HTTP status code 
                 }
-                else{
+                else
+                {
                     res.send({message: "WRONG USERNAME OR PASSWORD!"})
                 }
             }
@@ -88,12 +103,13 @@ app.post("/users", (req, res) => {
     )
 })
 
-// change user id to fit figma prototype
-let seedVal = Math.floor(Math.random() * (999999999 - 1 + 1)) + 1;
-let range = seedrandom(seedVal);
 
-// Test insert (Register)
-app.post("/users/new", (req, res) => {
+// ======== BOTH Client and Professional =========
+// REGISTER functionality
+CSIT314_Proj.post("/users/new", (req, res) => {
+  // change user id to fit figma prototype
+  let seedVal = Math.floor(Math.random() * (999999999 - 1 + 1)) + 1;
+  let range = seedrandom(seedVal);
   const id = Math.floor(range() * (999999999 - 100000000 + 1)) + 100000000;
   const firstname = req.body.firstname;
   const lastname = req.body.lastname;
@@ -115,8 +131,10 @@ app.post("/users/new", (req, res) => {
   )
 })
 
-// For payment and billing
-app.post("/moredetails", (req, res) => {
+// ======== BOTH Client and Professional =========
+// MEMBERSHIP functionality
+// A few database table are involved here
+CSIT314_Proj.post("/moredetails", (req, res) => {
     const cardNo = req.body.cardNo;
     console.log(req.body.membershipType); // Testing --> need to handle insertion into multiple tables for membership payment
     const memType = req.body.membershipType;
@@ -127,6 +145,7 @@ app.post("/moredetails", (req, res) => {
     const Postcode = req.body.postcode;
 
     let fulladdr = Address + " " + Suburb + " " + Postcode;
+    // Using google map API to get latitude and longtitude value of address inputed
     const gmapapiURL = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(fulladdr)}&key=${process.env.GOOGLE_MAPS_API_KEY}`;
 
     fetch(gmapapiURL)
@@ -139,7 +158,7 @@ app.post("/moredetails", (req, res) => {
             console.log(longitude);
 
             // Address Table
-            db.query("INSERT INTO address (Address, Suburb, Postcode, Latitude, Longitude, userid) VALUES (?, ?, ?, ?, ?, ?)", [Address, Suburb, Postcode, latitude, longitude, id], // Handle for lat and long values 
+            db.query("INSERT INTO address (Address, Suburb, Postcode, Latitude, Longitude, userid) VALUES (?, ?, ?, ?, ?, ?)", [Address, Suburb, Postcode, latitude, longitude, id], 
             (err, result) => {
                 if(err){
                     console.log(err);
@@ -180,15 +199,15 @@ app.post("/moredetails", (req, res) => {
     )
   })
 
-
-  // for service request tasks
-  app.post("/service_requests", (req, res) => {
+  // ======== FOR Client =========
+  // CREATE SERVICE REQUEST functionality
+  CSIT314_Proj.post("/service_requests", (req, res) => {
         const task = req.body.task;
         const specialty = req.body.specialty;
         const task_desc = req.body.task_description;
         const id = req.body.userId;
         // service_requests table
-        db.query("INSERT INTO service_requests (request, request_desc, specialty, userid) VALUES (?, ?, ?, ?)", [task, task_desc, specialty, id],  // Need to change paymentamount based on Subscription type
+        db.query("INSERT INTO service_requests (request, request_desc, specialty, userid) VALUES (?, ?, ?, ?)", [task, task_desc, specialty, id],  
         (err, result) => {
             if(err){
                 console.log(err);
@@ -202,22 +221,27 @@ app.post("/moredetails", (req, res) => {
 
 })
 
-// retrieve request by userId
-app.get("/servreq/:userId", (req,res) => {
+// ======== FOR Client =========
+// VIEW SERVICE REQUEST FUNCTIONALITY
+CSIT314_Proj.get("/servreq/:userId", (req,res) => {
     const userId = req.params.userId;
-    db.query(`SELECT sid, request, specialty FROM service_requests WHERE userid = ${userId}`,
-        (err, result) => {
+    let sqlquery = `SELECT sid, request, specialty FROM service_requests WHERE userid = ${userId}`;
+        db.query(sqlquery, (err, result) => {
             if(err){
                 console.log(err);
                 res.status(500).send({message: "Fatal error: SELECT error"});
-            }else{
+            }
+            else
+            {
                 res.status(200).send(result); // GET always need to pass data to frontend from backend
             }
         }
     )
 })
 
-app.get("/locationdetails/:userId",  (req,res) => { // ===== Both Client and Professional ========
+// ======== BOTH Client and Professional =========
+// Getting required locationdetails for users
+CSIT314_Proj.get("/locationdetails/:userId",  (req,res) => { 
     const userId = req.params.userId;
     db.query(`SELECT 
     u.Id, 
@@ -232,22 +256,22 @@ app.get("/locationdetails/:userId",  (req,res) => { // ===== Both Client and Pro
                 res.status(500).send({message: "Fatal error: SELECT error"});
             }
             else{
-                res.status(200).send(result); // GET always need to pass data to frontend from backend
+                res.status(200).send(result); 
             }
         }
     )
 })
 
-
-// retrieve professional for client
-app.get("/professional", (req,res) => {
+// ======== FOR Client =========
+// VIEW AVAILABLE PROFESSIONALS functionality
+CSIT314_Proj.get("/professional", (req,res) => {
     // client lat and long here for calcuation (within 50 km radius)
-    const clat = req.query.clat; // This is the clat=${cLat} for clat (query) not the variable name of const cLat
+    // This is the clat=${cLat} for clat (query) not the variable name of const cLat
+    const clat = req.query.clat; 
     const clng = req.query.clng;
     console.log(clat);
     console.log(clng);
 
-    //select only professionals here =========== Client Side only =============
     db.query(`SELECT 
     u.Id, 
     CONCAT(u.First_name, ' ', u.Last_name) AS name, 
@@ -270,9 +294,10 @@ app.get("/professional", (req,res) => {
                     const tLng = res.Longitude;
                     console.log("lat for tradie", tLat);
                     console.log("long for tradie", tLng);
+                 // const checkdistancekm = distanceonsphere(clat,clng,tLat,tLng);
 
                     // calculate distance between 2 locations (lat and long)
-                    //const checkdistancekm = distanceonsphere(clat,clng,tLat,tLng);
+                    // Using Haversive formula to calculate distance between 2 locations give latitude and longtitude values
 
                     const diffLat = (tLat * (Math.PI/180)) - (clat* (Math.PI/180));
                     const diffLon = (tLng * (Math.PI/180)) - (clng* (Math.PI/180));
@@ -280,7 +305,8 @@ app.get("/professional", (req,res) => {
                     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
                     const checkdistancekm = 6371 * c;
 
-                    return checkdistancekm <= 50;
+                    // return only those professionals within 50km radius from client
+                    return checkdistancekm <= 50; // Change the value here: 25 -> 25km radius, 17 -> 17km radius
                 });
                 res.status(200).send(resultfordistance); // GET always need to pass data to frontend from backend
             }
@@ -288,15 +314,15 @@ app.get("/professional", (req,res) => {
     )
 })
 
-// retrieve professional for client
-app.get("/servicerequests", (req,res) => {
+// ======== FOR Professional =========
+// VIEW AVAILABLE SERVICE REQUESTS functionality
+CSIT314_Proj.get("/servicerequests", (req,res) => {
     // client lat and long here for calcuation (within 50 km radius)
     const plat = req.query.plat; // This is the clat=${cLat} for clat (query) not the variable name of const cLat
     const plng = req.query.plng;
     console.log(plat);
     console.log(plng);
 
-    //select only service requests here =========== Professional Side only =============
     db.query(`SELECT 
 	u.Id , 
     CONCAT(u.First_name, ' ', u.Last_name) AS name, 
@@ -324,16 +350,19 @@ app.get("/servicerequests", (req,res) => {
                     const cLng = res.Longitude;
                     console.log("lat for client", cLat);
                     console.log("long for client", cLng);
+                  //const checkdistancekm = distanceonsphere(plat,plng,cLat,cLng);
 
                     // calculate distance between 2 locations (lat and long)
-                    //const checkdistancekm = distanceonsphere(plat,plng,cLat,cLng);
+                    // Using Haversine formula to calculate distance between 2 locations give latitude and longtitude values
+
                     const diffLat = (cLat * (Math.PI/180)) - (plat* (Math.PI/180));
                     const diffLon = (cLng * (Math.PI/180)) - (plng* (Math.PI/180));
                     const a = Math.sin(diffLat / 2) * Math.sin(diffLat / 2) + Math.cos(plat * (Math.PI/180)) * Math.cos(cLat * (Math.PI/180)) * Math.sin(diffLon/2) * Math.sin(diffLon/2);
                     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
                     const checkdistancekm = 6371 * c;
 
-                    return checkdistancekm <= 50;
+                    // return only those professionals within 50km radius from client
+                    return checkdistancekm <= 50; // Change the value here: 25 -> 25km radius, 17 -> 17km radius
                 });
                 res.status(200).send(resultfordistance); // GET always need to pass data to frontend from backend
             }
@@ -341,9 +370,9 @@ app.get("/servicerequests", (req,res) => {
     )
 })
 
-
-// handle payment to tradie
-app.post("/tpayment", (req, res) => {
+// ======== FOR Client =========
+// MAKE PAYMENT TO PROFESSIONAL functionality
+CSIT314_Proj.post("/tpayment", (req, res) => {
     const cardNo = req.body.cardNo;
     const id = req.body.userId;
     const cardExp = req.body.cardexpiry;
@@ -362,8 +391,9 @@ app.post("/tpayment", (req, res) => {
     )
 })
 
-// set price for service request (Tradie)
-app.post("/acceptservreq", (req, res) => {
+// ======== FOR Professional =========
+// ACCEPT SERVICE REQUEST functionality
+CSIT314_Proj.post("/acceptservreq", (req, res) => {
         const price = req.body.price;
         const servreq = req.body.acceptreq;
         db.query(`UPDATE service_requests SET price = ${price} WHERE request = '${servreq}'`,  // NOTE: string in '' or ""
@@ -379,8 +409,9 @@ app.post("/acceptservreq", (req, res) => {
     )
 })
 
-// client rating
-app.post("/clientratestradie", (req, res) => {
+// ======== FOR Client =========
+// PROFESSIONAL RATING functionality
+CSIT314_Proj.post("/clientratestradie", (req, res) => {
     const Feedback = req.body.feedback;
     const Rating = req.body.rating;
     const sid = req.body.sid;
@@ -397,8 +428,9 @@ app.post("/clientratestradie", (req, res) => {
 )
 })
 
-// professional rating
-app.post("/tradieratesclient",  (req,res) => {
+// ======== FOR Professional =========
+// CLIENT RATING functionality
+CSIT314_Proj.post("/tradieratesclient",  (req,res) => {
     const Feedback = req.body.feedback;
     const Jobnotes = req.body.jobnotes;
     const Rating = req.body.rating;
@@ -420,8 +452,9 @@ app.post("/tradieratesclient",  (req,res) => {
  )
 })
 
-// Client report
-app.get("/clientreport", (req,res) => {
+// ======== FOR Client =========
+// CLIENT REPORT functionality
+CSIT314_Proj.get("/clientreport", (req,res) => {
     const sid = req.query.servreqid;
         db.query(`SELECT 
         u.Id , 
@@ -448,8 +481,9 @@ app.get("/clientreport", (req,res) => {
         )
 });
 
-// Professional report
-app.get("/professionalreport", (req,res) => {
+// ======== FOR Professional =========
+// PROFESSIONAL REPORT functionality
+CSIT314_Proj.get("/professionalreport", (req,res) => {
     const sid = req.query.servreqid;
         db.query(`SELECT 
         u.Id , 
@@ -478,6 +512,6 @@ app.get("/professionalreport", (req,res) => {
         )
 });
 
-app.listen(process.env.BACKEND_PORT, () => {
+CSIT314_Proj.listen(process.env.BACKEND_PORT, () => {
     console.log("Backend listening on " + process.env.BACKEND_PORT) // NOTE: prints to console
 })

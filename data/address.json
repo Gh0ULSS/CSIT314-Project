@@ -1,0 +1,182 @@
+[
+    {
+        "aid": 1784825130,
+        "Address": "270 Princes Highway",
+        "Suburb": "Corrimal",
+        "Postcode": "2518",
+        "Latitude": -34.373798,
+        "Longitude": 150.8978827,
+        "userid": 16809755
+    },
+    {
+        "aid": 1568081054,
+        "Address": "53-57 Princes Highway",
+        "Suburb": "Unanderra",
+        "Postcode": "2526",
+        "Latitude": -34.451632,
+        "Longitude": 150.848278,
+        "userid": 3661562692
+    },
+    {
+        "aid": 129459187,
+        "Address": "204 Princes Highway",
+        "Suburb": "Corrimal",
+        "Postcode": "2518",
+        "Latitude": -34.3715863,
+        "Longitude": 150.8973999,
+        "userid": 485511131
+    },
+    {
+        "aid": 931286562,
+        "Address": "5 Collins Street",
+        "Suburb": "Corrimal",
+        "Postcode": "2518",
+        "Latitude": -34.3714369,
+        "Longitude": 150.905942,
+        "userid": 561688208
+    },
+    {
+        "aid": 113422375,
+        "Address": "11/19 Ruddock Street",
+        "Suburb": "Corrimal",
+        "Postcode": "2518",
+        "Latitude": -34.3723249,
+        "Longitude": 150.905888,
+        "userid": 3567078852
+    },
+    {
+        "aid": 2973980700,
+        "Address": "118 Corrimal Street",
+        "Suburb": "Wollongong",
+        "Postcode": "2500",
+        "Latitude": -34.4248898,
+        "Longitude": 150.8995972,
+        "userid": 2648174680
+    },
+    {
+        "aid": 3552103807,
+        "Address": "29 London Drive",
+        "Suburb": "West Wollongong",
+        "Postcode": "2500",
+        "Latitude": -34.429852,
+        "Longitude": 150.863328,
+        "userid": 2952320366
+    },
+    {
+        "aid": 2353357138,
+        "Address": "127 Cowper Street",
+        "Suburb": "Warrawong",
+        "Postcode": "2502",
+        "Latitude": -34.4816195,
+        "Longitude": 150.8777014,
+        "userid": 583848278
+    },
+    {
+        "aid": 3582262610,
+        "Address": "2 Gloucester Boulevard",
+        "Suburb": "Port Kembla",
+        "Postcode": "2505",
+        "Latitude": -34.4755889,
+        "Longitude": 150.9129174,
+        "userid": 2180562862
+    },
+    {
+        "aid": 624103721,
+        "Address": "50 Grey Street",
+        "Suburb": "Keiraville",
+        "Postcode": "2500",
+        "Latitude": -34.4148117,
+        "Longitude": 150.8720588,
+        "userid": 3773771553
+    },
+    {
+        "aid": 3536533086,
+        "Address": "114-118 Princes Highway",
+        "Suburb": "Unanderra",
+        "Postcode": "2526",
+        "Latitude": -34.4551498,
+        "Longitude": 150.8443461,
+        "userid": 2797136583
+    },
+    {
+        "aid": 1447941954,
+        "Address": "43 Princes Highway",
+        "Suburb": "Fairy Meadow",
+        "Postcode": "2519",
+        "Latitude": -34.39379639999999,
+        "Longitude": 150.8927677,
+        "userid": 1750200291
+    },
+    {
+        "aid": 3061181912,
+        "Address": "143 Kenny Street",
+        "Suburb": "Wollongong",
+        "Postcode": "2500",
+        "Latitude": -34.4370982,
+        "Longitude": 150.8894252,
+        "userid": 161966696
+    },
+    {
+        "aid": 2269713707,
+        "Address": "217 A32",
+        "Suburb": "Orange",
+        "Postcode": "2800",
+        "Latitude": -33.283607,
+        "Longitude": 149.0997819,
+        "userid": 1002937820
+    },
+    {
+        "aid": 622245284,
+        "Address": "24 Military Road",
+        "Suburb": "Port Kembla",
+        "Postcode": "2505",
+        "Latitude": -34.4793295,
+        "Longitude": 150.9023013,
+        "userid": 201606370
+    },
+    {
+        "aid": 3736471425,
+        "Address": "11 Braeburn Crescent",
+        "Suburb": "Orange",
+        "Postcode": "2800",
+        "Latitude": -33.2702213,
+        "Longitude": 149.0670896,
+        "userid": 2640380272
+    },
+    {
+        "aid": 1923030042,
+        "Address": "424 Princes Highway",
+        "Suburb": "West Wollongong",
+        "Postcode": "2500",
+        "Latitude": -34.425227,
+        "Longitude": 150.87429,
+        "userid": 1920255234
+    },
+    {
+        "aid": 3046896627,
+        "Address": "47 Bellambi Lane",
+        "Suburb": "Bellambi",
+        "Postcode": "2518",
+        "Latitude": -34.362495,
+        "Longitude": 150.904802,
+        "userid": 265541023
+    },
+    {
+        "aid": 1350068717,
+        "Address": "49 Montague Street",
+        "Suburb": "North Wollongong",
+        "Postcode": "2500",
+        "Latitude": -34.4006105,
+        "Longitude": 150.8958991,
+        "userid": 3597591595
+    },
+    {
+        "aid": 2267359567,
+        "Address": "73 Montague Street",
+        "Suburb": "North Wollongong",
+        "Postcode": "2500",
+        "Latitude": -34.4038248,
+        "Longitude": 150.8957905,
+        "userid": 508457881
+    }
+]

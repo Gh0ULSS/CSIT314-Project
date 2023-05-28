@@ -1,3 +1,10 @@
+/*
+CSIT314 Project
+Application Type: Web Application
+Web Stack Used: MySQL, Express, React, Nodejs (MERN)
+Project Contributors: Min Htut Myat, Ali Saleh, Charlie Johnson, Nathan Hunter, Amanda Moss
+*/
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
@@ -11,6 +18,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   // Handle "Enter" Key press
+  /*
   function handleEnterKey(keyactionevent) {
      if(keyactionevent.key == 'Enter')
      {
@@ -18,6 +26,7 @@ const LoginPage = () => {
        handleSubmit(keyactionevent);
      }
   }
+  */
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -27,41 +36,70 @@ const LoginPage = () => {
       email: email,
       password: password,
     }).then((response) => {
-      
-       //--------- FOR DEBUG PURPOSES ------------
-       // console.log(response)
-       // console.log(response.data)
-       // console.log(response.data[0].Id)
-       console.log(response.data[0].First_Name)
-       console.log(response.data[0].Last_Name)
-       console.log(response.data[0].AccountType)
-       // console.log(response.status)
        
+      //--------- FOR DEBUG PURPOSES ------------
+      // console.log() to identify bugs, checking if data is undefined or null
+      try{
+         console.log(response)
+         console.log(response.data)
+         console.log(response.data[0].Id)
+         console.log(response.data[0].First_Name)
+         console.log(response.data[0].Last_Name)
+         console.log(response.data[0].AccountType)
+      }
+      catch(err)
+      { 
+        alert("Wrong login credentials",err)
+      }
 
        //---- LOGIC ----------------
-       if(response.status == 200) // handle with OK HTTP status code 
+       try
        {
-          if(response.data[0].AccountType == "Client")
-          {
-              localStorage.setItem('Client_name', response.data[0].First_Name+" "+response.data[0].Last_Name)
-              localStorage.setItem('LuserId', response.data[0].Id)
-              navigate("/client") // Handle bringing relevant data over to next page
-          }
-          else if(response.data[0].AccountType == "Professional")
-          {
-              localStorage.setItem('Tradie_name', response.data[0].First_Name+" "+response.data[0].Last_Name)
-              localStorage.setItem('LuserId', response.data[0].Id)
-              navigate("/professional")
-          }
-          else
-          {
-              alert("Fatal Error")
-          }
-       }
-       else
-       {
-           alert("Error with session")
-       }
+
+        if(response.status == 200) // handle with OK HTTP status code 
+        {       
+            // Handle login based on user type here, for Client and Professional
+            if(response.data[0].AccountType == "Client" && response.data[0].First_Name != null)
+            {
+                /* Mixture of MySQL database and localStorage being used
+                   Reason: 
+                   For Web Applications, cookies and sessions exists for a reason,
+                   if we were to wolly use database to store all user data. The database
+                   design will be complex and backend queries will be complex. Making the
+                   implementation more complex. There will be more data transferred through 
+                   each function which negatively impacts performance of application and
+                   user convenience and experience
+                */
+                localStorage.setItem('Client_name', response.data[0].First_Name+" "+response.data[0].Last_Name)
+                localStorage.setItem('LuserId', response.data[0].Id)
+                navigate("/client") // Handle bringing relevant data over to next page
+            }
+            else if(response.data[0].AccountType == "Professional" && response.data[0].First_Name != null)
+            {
+                localStorage.setItem('Tradie_name', response.data[0].First_Name+" "+response.data[0].Last_Name)
+                localStorage.setItem('LuserId', response.data[0].Id)
+                navigate("/professional")
+            }
+            else
+            {
+                alert("Fatal Error")
+                setEmail('')
+                setPassword('')
+            }
+        }
+        else
+        {
+            alert("Wrong login credentials")
+            setEmail('')
+            setPassword('')
+        }
+      }
+      catch(error)
+      {
+         alert("wrong login credentials")
+         setEmail('')
+         setPassword('')
+      }
     })
   };
 
@@ -87,7 +125,7 @@ const LoginPage = () => {
               type="email"
               placeholder="example@email.com"
               value={email}
-              onKeyPress={handleEnterKey}
+              /* onKeyPress={handleEnterKey} */
               onChange={(event) => setEmail(event.target.value)}
             />
           </form>
@@ -98,7 +136,7 @@ const LoginPage = () => {
               type="password"
               placeholder="Enter password"
               value={password}
-              onKeyPress={handleEnterKey}
+              /* onKeyPress={handleEnterKey} */
               onChange={(event) => setPassword(event.target.value)}
             />
           </form>

@@ -2,15 +2,16 @@ import React from "react";
 import Footer from "../../../Components/Footer/Footer";
 import Header from "../../pages/ProfessionalHeader/Header";
 import ReactPDF from "react-to-print";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./report.css";
 import Axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 
 
 const Report = () => {
   const [rdetails,setrdetails] = useState([]);
-  const cref = React.useRef(); 
+  const pservicereport = useRef(); 
+  const navigate = useNavigate();
 
   var arequest = JSON.parse(localStorage.getItem('acceptedservreq'));
   var atradie = JSON.parse(localStorage.getItem('accepttradiedata'));
@@ -33,10 +34,17 @@ const Report = () => {
 
   console.log(rdetails);
 
+  
+  function ClearlocalStorage() {
+    localStorage.removeItem('acceptedservreq');
+    localStorage.removeItem('accepttradiedata');
+    navigate("/professional");
+  }
+
   return (
     <div className="professional-report-page">
       <Header />
-      <div className="table-wrapper" ref={cref}>
+      <div className="table-wrapper" ref={pservicereport}>
         <div className="professional-table">
           <tr>
             <table>
@@ -125,8 +133,11 @@ const Report = () => {
       <div>
           <ReactPDF
               trigger={() => (<button className="print-btn">Print</button>)}
-              content={() => cref.current}
+              content={() => pservicereport.current}
           />
+      </div>
+      <div>
+         <button className="print-btn" onClick={ClearlocalStorage}>Finish</button>
       </div>
       <Footer />
     </div>

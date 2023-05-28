@@ -54,6 +54,10 @@ const Home = () => {
         {
           return  <h4 style={{"color": "red", "text-align": "left"}} >A client selected you: {cname}</h4>
         }
+        else
+        {
+          return null;
+        }
       }
   };
 
