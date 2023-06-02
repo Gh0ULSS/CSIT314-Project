@@ -17,6 +17,7 @@ import bodyparser from "body-parser";
 import session from "express-session";
 import seedrandom from "seedrandom";
 
+// Read from .env files in env directory
 const env_file = path.join(process.cwd(), "../", "env/", "backend.env");
 console.log("ENV File: " + env_file.toString());
 
@@ -31,6 +32,7 @@ CSIT314_Proj.use(Express.json())
 CSIT314_Proj.use(bodyparser.urlencoded({ extended: false }));
 CSIT314_Proj.use(bodyparser.json());
 
+// Using sessions
 CSIT314_Proj.use(
     session({
       key: process.env.SESSION_KEY,
@@ -111,14 +113,7 @@ CSIT314_Proj.post("/users/new", (req, res) => {
   let seedVal = Math.floor(Math.random() * (999999999 - 1 + 1)) + 1;
   let range = seedrandom(seedVal);
   const id = Math.floor(range() * (999999999 - 100000000 + 1)) + 100000000;
-  const firstname = req.body.firstname;
-  const lastname = req.body.lastname;
-  const phonenumber = req.body.phonenumber
-  const email = req.body.email;
-  const password = req.body.password;
-  const accountType = req.body.accountType;
-  console.log(accountType);
-  db.query("INSERT INTO users (Id, First_Name, Last_Name, Phone_number, Email, Password, AccountType) VALUES (?, ?, ?, ?, ?, ?, ?)", [id, firstname, lastname, phonenumber, email, password, accountType], 
+  db.query("INSERT INTO users (Id, First_Name, Last_Name, Phone_number, Email, Password, AccountType) VALUES (?, ?, ?, ?, ?, ?, ?)", [id, req.body.firstname, req.body.lastname, req.body.phonenumber, req.body.email, req.body.password, req.body.accountType], 
       (err, result) => {
           if(err){
               console.log(err);
