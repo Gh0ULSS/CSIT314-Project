@@ -1,5 +1,13 @@
 # CSIT314
 CSIT314 Project 2023
+Backup for Rankork/CSIT314-Project
+
+### Contributors
+Min Htut Myat
+Nathan Hunter
+Amanda Moss
+Charlie Johnson
+Ali Saleh
 
 # Running software
 
