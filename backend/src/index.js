@@ -66,7 +66,7 @@ CSIT314_Proj.get("/", (req, res) => { // request and response
 // LOGOUT functionality
 CSIT314_Proj.get("http://localhost:3000/logout", (req, res) => {
     // Session destroy on logout
-    req.session.destrsoy((err) => {
+    req.session.destroy((err) => {
       if (!err) {
         return res.status(200).json({message: "Successful logout"});
       }
